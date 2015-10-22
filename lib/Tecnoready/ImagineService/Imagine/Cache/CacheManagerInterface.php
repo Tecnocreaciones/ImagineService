@@ -11,15 +11,16 @@
 
 namespace Tecnoready\ImagineService\Imagine\Cache;
 
+use Tecnoready\ImagineService\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Imagine\Cache\Resolver\ResolverInterface;
+
 /**
  *
  * @author Carlos Mendoza <inhack20@gmail.com>
  */
 interface CacheManagerInterface 
 {
-    public function addResolver($filter, Resolver\ResolverInterface $resolver);
-    
-    function getResolver($filter);
+    public function addResolver($filter, ResolverInterface $resolver);
     
     public function getBrowserPath($path, $filter, array $runtimeConfig = array());
     

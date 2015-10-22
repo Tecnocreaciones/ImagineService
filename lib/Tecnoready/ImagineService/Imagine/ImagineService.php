@@ -11,6 +11,11 @@
 
 namespace Tecnoready\ImagineService\Imagine;
 
+use Tecnoready\ImagineService\Imagine\Cache\CacheManagerInterface;
+use Tecnoready\ImagineService\Imagine\Cache\SignerInterface;
+use Tecnoready\ImagineService\Imagine\Data\DataManagerInterface;
+use Tecnoready\ImagineService\Imagine\Filter\FilterManagerInterface;
+
 /**
  * Servicio manejador de imagenes
  *
@@ -20,31 +25,42 @@ class ImagineService
 {
     /**
      *
-     * @var Data\DataManagerInterface
+     * @var CacheManagerInterface
+     */
+    private $cacheManager;
+    /**
+     *
+     * @var DataManagerInterface
      */
     private $dataManager;
     /**
      *
-     * @var Filter\FilterManagerInterface
+     * @var FilterManagerInterface
      */
     private $filterManager;
-    /**
-     *
-     * @var Cache\CacheManagerInterface
-     */
-    private $cacheManager;
     
     /**
      *
-     * @var Cache\SignerInterface
+     * @var SignerInterface
      */
     private $signer;
+    
+    public function __construct(CacheManagerInterface $cacheManager,
+            DataManagerInterface $dataManager, 
+            FilterManagerInterface $filterManager, 
+            SignerInterface $signer) {
+        $this->cacheManager = $cacheManager;
+        $this->dataManager = $dataManager;
+        $this->filterManager = $filterManager;
+        $this->signer = $signer;
+    }
+
     
     public function getDataManager() {
         return $this->dataManager;
     }
 
-    public function setDataManager(Data\DataManagerInterface $dataManager) {
+    public function setDataManager(DataManagerInterface $dataManager) {
         $this->dataManager = $dataManager;
         return $this;
     }
@@ -53,7 +69,7 @@ class ImagineService
         return $this->filterManager;
     }
 
-    public function setFilterManager(Filter\FilterManagerInterface $filterManager) {
+    public function setFilterManager(FilterManagerInterface $filterManager) {
         $this->filterManager = $filterManager;
         return $this;
     }
@@ -62,7 +78,7 @@ class ImagineService
         return $this->cacheManager;
     }
 
-    public function setCacheManager(Cache\CacheManagerInterface $cacheManager) {
+    public function setCacheManager(CacheManagerInterface $cacheManager) {
         $this->cacheManager = $cacheManager;
         return $this;
     }
@@ -71,7 +87,7 @@ class ImagineService
         return $this->signer;
     }
 
-    public function setSigner(Cache\SignerInterface $signer) {
+    public function setSigner(SignerInterface $signer) {
         $this->signer = $signer;
         return $this;
     }

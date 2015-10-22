@@ -5,23 +5,13 @@ namespace Tecnoready\ImagineService\Imagine\Cache;
 use Tecnoready\ImagineService\Binary\BinaryInterface;
 use Tecnoready\ImagineService\Imagine\Cache\Resolver\ResolverInterface;
 use Tecnoready\ImagineService\Imagine\Filter\FilterConfiguration;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Tecnoready\ImagineService\ImagineEvents;
-use Tecnoready\ImagineService\Events\CacheResolveEvent;
 
-class CacheManager implements CacheManagerInterface
+abstract class AbstractCacheManager implements CacheManagerInterface
 {
     /**
      * @var FilterConfiguration
      */
     protected $filterConfig;
-
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
 
     /**
      * @var ResolverInterface[]
@@ -34,11 +24,6 @@ class CacheManager implements CacheManagerInterface
     protected $signer;
 
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
      * @var string
      */
     protected $defaultResolver;
@@ -47,22 +32,16 @@ class CacheManager implements CacheManagerInterface
      * Constructs the cache manager to handle Resolvers based on the provided FilterConfiguration.
      *
      * @param FilterConfiguration      $filterConfig
-     * @param RouterInterface          $router
      * @param SignerInterface          $signer
-     * @param EventDispatcherInterface $dispatcher
      * @param string                   $defaultResolver
      */
     public function __construct(
         FilterConfiguration $filterConfig,
-        RouterInterface $router,
         SignerInterface $signer,
-        EventDispatcherInterface $dispatcher,
         $defaultResolver = null
     ) {
         $this->filterConfig = $filterConfig;
-        $this->router = $router;
         $this->signer = $signer;
-        $this->dispatcher = $dispatcher;
         $this->defaultResolver = $defaultResolver ?: 'default';
     }
 
@@ -156,24 +135,24 @@ class CacheManager implements CacheManagerInterface
      *
      * @return string
      */
-    public function generateUrl($path, $filter, array $runtimeConfig = array())
-    {
-        $params = array(
-            'path' => ltrim($path, '/'),
-            'filter' => $filter,
-        );
-
-        if (empty($runtimeConfig)) {
-            $filterUrl = $this->router->generate('liip_imagine_filter', $params, true);
-        } else {
-            $params['filters'] = $runtimeConfig;
-            $params['hash'] = $this->signer->sign($path, $runtimeConfig);
-
-            $filterUrl = $this->router->generate('liip_imagine_filter_runtime', $params, true);
-        }
-
-        return $filterUrl;
-    }
+//    public function generateUrl($path, $filter, array $runtimeConfig = array())
+//    {
+//        $params = array(
+//            'path' => ltrim($path, '/'),
+//            'filter' => $filter,
+//        );
+//
+//        if (empty($runtimeConfig)) {
+//            $filterUrl = $this->router->generate('liip_imagine_filter', $params, true);
+//        } else {
+//            $params['filters'] = $runtimeConfig;
+//            $params['hash'] = $this->signer->sign($path, $runtimeConfig);
+//
+//            $filterUrl = $this->router->generate('liip_imagine_filter_runtime', $params, true);
+//        }
+//
+//        return $filterUrl;
+//    }
 
     /**
      * Checks whether the path is already stored within the respective Resolver.
@@ -201,18 +180,12 @@ class CacheManager implements CacheManagerInterface
     public function resolve($path, $filter)
     {
         if (false !== strpos($path, '/../') || 0 === strpos($path, '../')) {
-            throw new NotFoundHttpException(sprintf("Source image was searched with '%s' outside of the defined root path", $path));
+            throw $this->createNotFoundHttpException(sprintf("Source image was searched with '%s' outside of the defined root path", $path));
         }
 
-        $preEvent = new CacheResolveEvent($path, $filter);
-        $this->dispatcher->dispatch(ImagineEvents::PRE_RESOLVE, $preEvent);
+        $url = $this->getResolver($filter)->resolve($path,$filter);
 
-        $url = $this->getResolver($preEvent->getFilter())->resolve($preEvent->getPath(), $preEvent->getFilter());
-
-        $postEvent = new CacheResolveEvent($preEvent->getPath(), $preEvent->getFilter(), $url);
-        $this->dispatcher->dispatch(ImagineEvents::POST_RESOLVE, $postEvent);
-
-        return $postEvent->getUrl();
+        return $url;
     }
 
     /**
@@ -260,5 +233,8 @@ class CacheManager implements CacheManagerInterface
         foreach ($mapping as $resolver) {
             $resolver->remove($paths, $mapping[$resolver]);
         }
+    }
+    protected function createNotFoundHttpException($message = null, \Exception $previous = null, $code = 0) {
+        return new \Tecnoready\ImagineService\Exception\NotFoundHttpException($message, $previous,$code);
     }
 }
