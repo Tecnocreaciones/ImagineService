@@ -20,7 +20,7 @@
     },
      "suggest": {
         "aws/aws-sdk-php":          "Add it if you'd like to use aws v2 or v3 resolver",
-        "amazonwebservices/aws-sdk-for-php": "Add it if you'd like to use aws v1 resolver",
+        "amazonwebservices/aws-sdk-for-php": "Add it if you'd like to use aws v1 resolver"
     },
     "autoload": {
         "psr-0": {
