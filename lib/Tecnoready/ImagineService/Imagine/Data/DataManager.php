@@ -9,7 +9,7 @@ use Tecnoready\ImagineService\Model\Binary;
 use Tecnoready\ImagineService\Binary\BinaryInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 
-class DataManager
+class DataManager implements DataManagerInterface
 {
     /**
      * @var MimeTypeGuesserInterface

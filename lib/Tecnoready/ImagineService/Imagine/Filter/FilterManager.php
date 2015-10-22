@@ -9,7 +9,7 @@ use Tecnoready\ImagineService\Imagine\Filter\PostProcessor\PostProcessorInterfac
 use Tecnoready\ImagineService\Imagine\Filter\Loader\LoaderInterface;
 use Tecnoready\ImagineService\Model\Binary;
 
-class FilterManager
+class FilterManager implements FilterManagerInterface
 {
     /**
      * @var FilterConfiguration
