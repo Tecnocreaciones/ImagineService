@@ -2,16 +2,26 @@
     "name": "tecnoready/imagine-service",
     "description": "Manage and optimize images with cache and filters using Imagine",
     "type": "php",
-    "require": {
-	"php": ">=5.3.3",
-        "imagine/imagine": "dev-master"
-    },
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Carlos Mendoza",
             "email": "inhack20@gmail.com"
         }
     ],
+    "require": {
+	"php": ">=5.3.3",
+        "imagine/imagine": "dev-master"
+    },
+    "require-dev": {
+        "aws/aws-sdk-php":          "~2.4",
+        "amazonwebservices/aws-sdk-for-php": "~1.0",
+        "ext-gd":                   "*"
+    },
+     "suggest": {
+        "aws/aws-sdk-php":          "Add it if you'd like to use aws v2 or v3 resolver",
+        "amazonwebservices/aws-sdk-for-php": "Add it if you'd like to use aws v1 resolver",
+    },
     "autoload": {
         "psr-0": {
             "Tecnoready": "lib/"
