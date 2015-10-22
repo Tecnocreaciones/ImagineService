@@ -1,8 +1,8 @@
 <?php
 
-namespace Liip\ImagineBundle\Model;
+namespace Tecnoready\ImagineService\Model;
 
-use Liip\ImagineBundle\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
 
 class Binary implements BinaryInterface
 {

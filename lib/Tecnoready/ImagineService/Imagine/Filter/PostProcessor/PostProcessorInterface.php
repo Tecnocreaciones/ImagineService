@@ -1,8 +1,8 @@
 <?php
 
-namespace Liip\ImagineBundle\Imagine\Filter\PostProcessor;
+namespace Tecnoready\ImagineService\Imagine\Filter\PostProcessor;
 
-use Liip\ImagineBundle\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
 
 /**
  * Interface for PostProcessors - handlers which can operate on binaries prepared in FilterManager.

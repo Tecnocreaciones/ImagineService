@@ -2,7 +2,7 @@
 
 namespace Tecnoready\ImagineService\Binary\Loader;
 
-use Liip\ImagineBundle\Model\Binary;
+use Tecnoready\ImagineService\Model\Binary;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 use Tecnoready\ImagineService\Binary\MimeTypeGuesserInterface;
 use Tecnoready\ImagineService\Exception\Binary\Loader\NotLoadableException;

@@ -2,11 +2,11 @@
 
 namespace Tecnoready\ImagineService\Imagine\Data;
 
-use Liip\ImagineBundle\Binary\Loader\LoaderInterface;
-use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
-use Liip\ImagineBundle\Binary\MimeTypeGuesserInterface;
-use Liip\ImagineBundle\Model\Binary;
-use Liip\ImagineBundle\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Binary\Loader\LoaderInterface;
+use Tecnoready\ImagineService\Imagine\Filter\FilterConfiguration;
+use Tecnoready\ImagineService\Binary\MimeTypeGuesserInterface;
+use Tecnoready\ImagineService\Model\Binary;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 
 class DataManager
@@ -107,7 +107,7 @@ class DataManager
      *
      * @throws \LogicException
      *
-     * @return \Liip\ImagineBundle\Binary\BinaryInterface
+     * @return \Tecnoready\ImagineService\Binary\BinaryInterface
      */
     public function find($filter, $path)
     {

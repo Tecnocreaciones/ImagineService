@@ -2,8 +2,8 @@
 
 namespace Tecnoready\ImagineService\Imagine\Cache\Resolver;
 
-use Liip\ImagineBundle\Binary\BinaryInterface;
-use Liip\ImagineBundle\Exception\Imagine\Cache\Resolver\NotResolvableException;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Exception\Imagine\Cache\Resolver\NotResolvableException;
 
 interface ResolverInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Liip\ImagineBundle\Imagine\Filter\PostProcessor;
+namespace Tecnoready\ImagineService\Imagine\Filter\PostProcessor;
 
-use Liip\ImagineBundle\Binary\BinaryInterface;
-use Liip\ImagineBundle\Model\Binary;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Model\Binary;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\ProcessBuilder;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Liip\ImagineBundle\Exception\Imagine\Filter;
+namespace Tecnoready\ImagineService\Exception\Imagine\Filter;
 
 use Tecnoready\ImagineService\Exception\ExceptionInterface;
 

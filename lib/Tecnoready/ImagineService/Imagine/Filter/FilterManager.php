@@ -3,11 +3,11 @@
 namespace Tecnoready\ImagineService\Imagine\Filter;
 
 use Imagine\Image\ImagineInterface;
-use Liip\ImagineBundle\Binary\BinaryInterface;
-use Liip\ImagineBundle\Binary\MimeTypeGuesserInterface;
-use Liip\ImagineBundle\Imagine\Filter\PostProcessor\PostProcessorInterface;
-use Liip\ImagineBundle\Imagine\Filter\Loader\LoaderInterface;
-use Liip\ImagineBundle\Model\Binary;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Binary\MimeTypeGuesserInterface;
+use Tecnoready\ImagineService\Imagine\Filter\PostProcessor\PostProcessorInterface;
+use Tecnoready\ImagineService\Imagine\Filter\Loader\LoaderInterface;
+use Tecnoready\ImagineService\Model\Binary;
 
 class FilterManager
 {

@@ -2,7 +2,7 @@
 
 namespace Tecnoready\ImagineService\Imagine\Filter;
 
-use Liip\ImagineBundle\Exception\Imagine\Filter\NonExistingFilterException;
+use Tecnoready\ImagineService\Exception\Imagine\Filter\NonExistingFilterException;
 
 class FilterConfiguration
 {

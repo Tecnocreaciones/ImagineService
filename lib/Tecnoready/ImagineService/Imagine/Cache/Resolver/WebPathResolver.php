@@ -2,7 +2,7 @@
 
 namespace Tecnoready\ImagineService\Imagine\Cache\Resolver;
 
-use Liip\ImagineBundle\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RequestContext;
 

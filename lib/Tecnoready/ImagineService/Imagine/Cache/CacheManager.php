@@ -2,14 +2,14 @@
 
 namespace Tecnoready\ImagineService\Imagine\Cache;
 
-use Liip\ImagineBundle\Binary\BinaryInterface;
-use Liip\ImagineBundle\Imagine\Cache\Resolver\ResolverInterface;
-use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
+use Tecnoready\ImagineService\Imagine\Cache\Resolver\ResolverInterface;
+use Tecnoready\ImagineService\Imagine\Filter\FilterConfiguration;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Liip\ImagineBundle\ImagineEvents;
-use Liip\ImagineBundle\Events\CacheResolveEvent;
+use Tecnoready\ImagineService\ImagineEvents;
+use Tecnoready\ImagineService\Events\CacheResolveEvent;
 
 class CacheManager
 {
