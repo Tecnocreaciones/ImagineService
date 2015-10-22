@@ -1,10 +1,10 @@
 <?php
 
-namespace Liip\ImagineBundle\Imagine\Filter\Loader;
+namespace Tecnoready\ImagineService\Imagine\Filter\Loader;
 
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Image\ImageInterface;
-use Liip\ImagineBundle\Imagine\Filter\RelativeResize;
+use Tecnoready\ImagineService\Imagine\Filter\RelativeResize;
 
 /**
  * Loader for this bundle's relative resize filter.

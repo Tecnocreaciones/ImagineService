@@ -1,6 +1,6 @@
 <?php
 
-namespace Liip\ImagineBundle\Imagine\Filter\Loader;
+namespace Tecnoready\ImagineService\Imagine\Filter\Loader;
 
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
