@@ -1,9 +1,9 @@
 {
     "name": "tecnoready/imagine-service",
     "description": "Manage and optimize images with cache and filters using Imagine",
-    "type": "php imagine images",
+    "type": "php",
     "require": {
-        "imagine/imagine": "v0.6.*"
+        "imagine/imagine": "dev-master"
     },
     "authors": [
         {
