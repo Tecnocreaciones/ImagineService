@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Tecnoready\ImagineService\ImagineEvents;
 use Tecnoready\ImagineService\Events\CacheResolveEvent;
 
-class CacheManager
+class CacheManager implements CacheManagerInterface
 {
     /**
      * @var FilterConfiguration
