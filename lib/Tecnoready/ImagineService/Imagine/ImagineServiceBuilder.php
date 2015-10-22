@@ -11,8 +11,6 @@
 
 namespace Tecnoready\ImagineService\Imagine;
 
-use Imagine\Gd\Imagine as Imagine2;
-use Imagine\Imagick\Imagine;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Tecnoready\ImagineService\Binary\SimpleMimeTypeGuesser;
@@ -32,6 +30,7 @@ class ImagineServiceBuilder
 {
     const DRIVE_GD = "gd";
     const DRIVE_IMAGICK = "imagick";
+    const DRIVE_GMAGICK = "gmagick";
     
     /**
      * Secret signer
@@ -59,14 +58,34 @@ class ImagineServiceBuilder
      */
     private $cacheManager;
     private $cacheManagerClass;
-
+    
+    /**
+     * Default resolver path
+     * @var Cache\Resolver\ResolverInterface
+     */
+    private $defaultResolver;
+    
+    /**
+     * Raiz de la carpeta publica
+     * @var string 
+     */
+    private $webRootDir;
+    
+    private $options;
+    
+    public function __construct(array $options = array()) {
+        $this->setOptions($options);
+    }
+    
     public function withDrive($drive) {
         $this->drive = $drive;
         
         if($drive == self::DRIVE_GD){
-            $this->imagine = new Imagine2();
+            $this->imagine = new \Imagine\Gd\Imagine();
         }else if($drive == self::DRIVE_IMAGICK){
-            $this->imagine = new Imagine();
+            $this->imagine = new \Imagine\Imagick\Imagine();
+        }else if($drive == self::DRIVE_GMAGICK){
+            $this->imagine = new \Imagine\Gmagick\Imagine();
         }
         
         return $this;
@@ -97,6 +116,16 @@ class ImagineServiceBuilder
         return $this;
     }
     
+    public function withWebRootDir($webRootDir) {
+        $this->webRootDir = $webRootDir;
+        return $this;
+    }
+        
+    public function withDefaultResolver(Cache\Resolver\ResolverInterface $defaultResolver) {
+        $this->defaultResolver = $defaultResolver;
+        return $this;
+    }
+        
     /**
      * 
      * @return \Tecnoready\ImagineService\Imagine\ImagineService
@@ -114,7 +143,19 @@ class ImagineServiceBuilder
         if($this->cacheManagerClass){
             $this->cacheManager = new $cacheManagerClass($filterConfig, $signer);
         }
+        if(!$this->defaultResolver){
+            $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+            $filesystem = new \Symfony\Component\Filesystem\Filesystem();
+            $this->defaultResolver = new Cache\Resolver\WebPathResolver(
+                    $filesystem, 
+                    $request, 
+                    $this->options['web_root_dir'],
+                    $this->options['cache_prefix']
+                );
+        }
+        
         $cacheManager = $this->cacheManager;
+        $cacheManager->addResolver("default", $this->defaultResolver);
 
         $simpleMimeTypeGuesser = new SimpleMimeTypeGuesser(MimeTypeGuesser::getInstance());
         $extensionGuesser = ExtensionGuesser::getInstance();
@@ -125,5 +166,41 @@ class ImagineServiceBuilder
         $app = new ImagineService($cacheManager,$dataManager,$filterManager,$signer);
         
         return $app;
+    }
+    
+    /**
+     * Sets options.
+     *
+     * Available options:
+     *
+     *   * cache_dir:     The cache directory (or null to disable caching)
+     *   * debug:         Whether to enable debugging or not (false by default)
+     *   * resource_type: Type hint for the main resource (optional)
+     *
+     * @param array $options An array of options
+     *
+     * @throws \InvalidArgumentException When unsupported option is provided
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = array(
+            'cache_prefix' => 'media/cache',
+            'web_root_dir' => null,
+            'debug' => false,
+        );
+
+        // check option names and live merge, if errors are encountered Exception will be thrown
+        $invalid = array();
+        foreach ($options as $key => $value) {
+            if (array_key_exists($key, $this->options)) {
+                $this->options[$key] = $value;
+            } else {
+                $invalid[] = $key;
+            }
+        }
+
+        if ($invalid) {
+            throw new \InvalidArgumentException(sprintf('The Image Service does not support the following options: "%s".', implode('", "', $invalid)));
+        }
     }
 }

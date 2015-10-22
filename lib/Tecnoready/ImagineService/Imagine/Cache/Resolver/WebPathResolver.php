@@ -2,9 +2,9 @@
 
 namespace Tecnoready\ImagineService\Imagine\Cache\Resolver;
 
-use Tecnoready\ImagineService\Binary\BinaryInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\HttpFoundation\Request;
+use Tecnoready\ImagineService\Binary\BinaryInterface;
 
 class WebPathResolver implements ResolverInterface
 {
@@ -14,7 +14,7 @@ class WebPathResolver implements ResolverInterface
     protected $filesystem;
 
     /**
-     * @var RequestContext
+     * @var Request
      */
     protected $requestContext;
 
@@ -35,7 +35,7 @@ class WebPathResolver implements ResolverInterface
      */
     public function __construct(
         Filesystem $filesystem,
-        RequestContext $requestContext,
+        Request $requestContext,
         $webRootDir,
         $cachePrefix = 'media/cache'
     ) {
