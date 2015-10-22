@@ -2,13 +2,13 @@
     "name": "tecnoready/imagine-service",
     "description": "Manage and optimize images with cache and filters using Imagine",
     "type": "php",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Carlos Mendoza",
             "email": "inhack20@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
 	"php": ">=5.3.3",
         "imagine/imagine": "dev-master"
