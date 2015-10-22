@@ -3,6 +3,7 @@
     "description": "Manage and optimize images with cache and filters using Imagine",
     "type": "php",
     "require": {
+	"php": ">=5.3.3",
         "imagine/imagine": "dev-master"
     },
     "authors": [
@@ -10,5 +11,10 @@
             "name": "Carlos Mendoza",
             "email": "inhack20@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": {
+            "Tecnoready": "lib/"
+        }
+    }
 }
