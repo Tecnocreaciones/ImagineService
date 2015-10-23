@@ -1,5 +1,6 @@
 # ImagineService
 Manage and optimize images with cache and filters using Imagine
+Inspired in https://github.com/liip/LiipImagineBundle
 
 # My filter and config definition
 <pre>
