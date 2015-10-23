@@ -157,11 +157,27 @@ class ImagineServiceBuilder
         $cacheManager = $this->cacheManager;
         $cacheManager->addResolver("default", $this->defaultResolver);
 
-        $simpleMimeTypeGuesser = new SimpleMimeTypeGuesser(MimeTypeGuesser::getInstance());
+        $mimeTypeGuesser = new SimpleMimeTypeGuesser(MimeTypeGuesser::getInstance());
         $extensionGuesser = ExtensionGuesser::getInstance();
-        $dataManager = new DataManager($simpleMimeTypeGuesser, $extensionGuesser, $filterConfig);
+        
+        $loader = new \Tecnoready\ImagineService\Binary\Loader\FileSystemLoader(MimeTypeGuesser::getInstance(),$extensionGuesser,$this->options['web_root_dir']);
+        $dataManager = new DataManager($mimeTypeGuesser, $extensionGuesser, $filterConfig,'default');
+        $dataManager->addLoader("default", $loader);
 
-        $filterManager = new FilterManager($filterConfig, $this->imagine, $simpleMimeTypeGuesser);
+        //init filters image
+        $filterManager = new FilterManager($filterConfig, $this->imagine, $mimeTypeGuesser);
+        $filterManager->addLoader('auto_rotate', new Filter\Loader\AutoRotateFilterLoader());
+        $filterManager->addLoader('background', new Filter\Loader\BackgroundFilterLoader($this->imagine));
+        $filterManager->addLoader('crop', new Filter\Loader\CropFilterLoader());
+        $filterManager->addLoader('interlace', new Filter\Loader\InterlaceFilterLoader());
+        $filterManager->addLoader('paste', new Filter\Loader\PasteFilterLoader($this->imagine, $this->options['web_root_dir']));
+        $filterManager->addLoader('relative_resize', new Filter\Loader\RelativeResizeFilterLoader());
+        $filterManager->addLoader('resize', new Filter\Loader\ResizeFilterLoader());
+        $filterManager->addLoader('rotate', new Filter\Loader\RotateFilterLoader());
+        $filterManager->addLoader('strip', new Filter\Loader\StripFilterLoader());
+        $filterManager->addLoader('thumbnail', new Filter\Loader\ThumbnailFilterLoader());
+        $filterManager->addLoader('upscale', new Filter\Loader\UpscaleFilterLoader());
+        $filterManager->addLoader('watermark', new Filter\Loader\WatermarkFilterLoader($this->imagine, $this->options['web_root_dir']));
 
         $app = new ImagineService($cacheManager,$dataManager,$filterManager,$signer);
         

@@ -16,7 +16,7 @@ class WebPathResolver implements ResolverInterface
     /**
      * @var Request
      */
-    protected $requestContext;
+    protected $request;
 
     /**
      * @var string
@@ -29,18 +29,18 @@ class WebPathResolver implements ResolverInterface
 
     /**
      * @param Filesystem     $filesystem
-     * @param RequestContext $requestContext
+     * @param RequestContext $request
      * @param string         $webRootDir
      * @param string         $cachePrefix
      */
     public function __construct(
         Filesystem $filesystem,
-        Request $requestContext,
+        Request $request,
         $webRootDir,
         $cachePrefix = 'media/cache'
     ) {
         $this->filesystem = $filesystem;
-        $this->requestContext = $requestContext;
+        $this->request = $request;
 
         $this->webRoot = rtrim(str_replace('//', '/', $webRootDir), '/');
         $this->cachePrefix = ltrim(str_replace('//', '/', $cachePrefix), '/');
@@ -129,23 +129,23 @@ class WebPathResolver implements ResolverInterface
     protected function getBaseUrl()
     {
         $port = '';
-        if ('https' == $this->requestContext->getScheme() && $this->requestContext->getHttpsPort() != 443) {
-            $port =  ":{$this->requestContext->getHttpsPort()}";
+        if ('https' == $this->request->getScheme() && $this->request->getPort() != 443) {
+            $port =  ":{$this->request->getPort()}";
         }
 
-        if ('http' == $this->requestContext->getScheme() && $this->requestContext->getHttpPort() != 80) {
-            $port =  ":{$this->requestContext->getHttpPort()}";
+        if ('http' == $this->request->getScheme() && $this->request->getPort() != 80) {
+            $port =  ":{$this->request->getPort()}";
         }
 
-        $baseUrl = $this->requestContext->getBaseUrl();
-        if ('.php' == substr($this->requestContext->getBaseUrl(), -4)) {
-            $baseUrl = pathinfo($this->requestContext->getBaseurl(), PATHINFO_DIRNAME);
+        $baseUrl = $this->request->getBaseUrl();
+        if ('.php' == substr($this->request->getBaseUrl(), -4)) {
+            $baseUrl = pathinfo($this->request->getBaseurl(), PATHINFO_DIRNAME);
         }
         $baseUrl = rtrim($baseUrl, '/\\');
 
         return sprintf('%s://%s%s%s',
-            $this->requestContext->getScheme(),
-            $this->requestContext->getHost(),
+            $this->request->getScheme(),
+            $this->request->getHost(),
             $port,
             $baseUrl
         );

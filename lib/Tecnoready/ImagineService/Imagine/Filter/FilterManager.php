@@ -99,7 +99,7 @@ class FilterManager implements FilterManagerInterface
             ),
             $config
         );
-
+        
         $image = $this->imagine->load($binary->getContent());
 
         foreach ($config['filters'] as $eachFilter => $eachOptions) {

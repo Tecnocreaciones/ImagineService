@@ -4,7 +4,7 @@ namespace Tecnoready\ImagineService\Binary\Loader;
 
 use Tecnoready\ImagineService\Model\Binary;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
-use Tecnoready\ImagineService\Binary\MimeTypeGuesserInterface;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Tecnoready\ImagineService\Exception\Binary\Loader\NotLoadableException;
 
 class FileSystemLoader implements LoaderInterface
@@ -56,6 +56,7 @@ class FileSystemLoader implements LoaderInterface
         }
 
         $mimeType = $this->mimeTypeGuesser->guess($absolutePath);
+        var_dump($absolutePath);
 
         return new Binary(
             file_get_contents($absolutePath),
