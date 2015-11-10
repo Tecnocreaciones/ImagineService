@@ -179,7 +179,7 @@ class ImagineServiceBuilder
         $filterManager->addLoader('upscale', new Filter\Loader\UpscaleFilterLoader());
         $filterManager->addLoader('watermark', new Filter\Loader\WatermarkFilterLoader($this->imagine, $this->options['web_root_dir']));
 
-        $app = new ImagineService($cacheManager,$dataManager,$filterManager,$signer);
+        $app = new ImagineService($cacheManager,$dataManager,$filterManager,$signer,$this->imagine);
         
         return $app;
     }

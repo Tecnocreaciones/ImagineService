@@ -11,6 +11,7 @@
 
 namespace Tecnoready\ImagineService\Imagine;
 
+use Imagine\Image\ImagineInterface;
 use Tecnoready\ImagineService\Imagine\Cache\CacheManagerInterface;
 use Tecnoready\ImagineService\Imagine\Cache\SignerInterface;
 use Tecnoready\ImagineService\Imagine\Data\DataManagerInterface;
@@ -23,6 +24,11 @@ use Tecnoready\ImagineService\Imagine\Filter\FilterManagerInterface;
  */
 class ImagineService 
 {
+    /**
+     *
+     * @var ImagineInterface
+     */
+    private $imagine;
     /**
      *
      * @var CacheManagerInterface
@@ -48,47 +54,36 @@ class ImagineService
     public function __construct(CacheManagerInterface $cacheManager,
             DataManagerInterface $dataManager, 
             FilterManagerInterface $filterManager, 
-            SignerInterface $signer) {
+            SignerInterface $signer,
+             ImagineInterface $imagine) {
         $this->cacheManager = $cacheManager;
         $this->dataManager = $dataManager;
         $this->filterManager = $filterManager;
         $this->signer = $signer;
+        $this->imagine = $imagine;
     }
 
-    
-    public function getDataManager() {
-        return $this->dataManager;
+    /**
+     * 
+     * @return ImagineInterface
+     */
+    public function getImagine() {
+        return $this->imagine;
     }
 
-    public function setDataManager(DataManagerInterface $dataManager) {
-        $this->dataManager = $dataManager;
-        return $this;
-    }
-    
-    public function getFilterManager() {
-        return $this->filterManager;
-    }
-
-    public function setFilterManager(FilterManagerInterface $filterManager) {
-        $this->filterManager = $filterManager;
-        return $this;
-    }
-    
     public function getCacheManager() {
         return $this->cacheManager;
     }
 
-    public function setCacheManager(CacheManagerInterface $cacheManager) {
-        $this->cacheManager = $cacheManager;
-        return $this;
-    }
-    
-    public function getSigner() {
-        return $this->signer;
+    public function getDataManager() {
+        return $this->dataManager;
     }
 
-    public function setSigner(SignerInterface $signer) {
-        $this->signer = $signer;
-        return $this;
+    public function getFilterManager() {
+        return $this->filterManager;
+    }
+
+    public function getSigner() {
+        return $this->signer;
     }
 }

@@ -56,7 +56,6 @@ class FileSystemLoader implements LoaderInterface
         }
 
         $mimeType = $this->mimeTypeGuesser->guess($absolutePath);
-        var_dump($absolutePath);
 
         return new Binary(
             file_get_contents($absolutePath),

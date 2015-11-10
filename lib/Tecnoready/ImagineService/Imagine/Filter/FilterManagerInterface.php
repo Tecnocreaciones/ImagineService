@@ -24,6 +24,9 @@ interface FilterManagerInterface {
     
     public function addPostProcessor($name, PostProcessorInterface $postProcessor);
     
+    /**
+     * @return FilterConfiguration Description
+     */
     public function getFilterConfiguration();
     
     public function apply(BinaryInterface $binary, array $config);
