@@ -64,6 +64,12 @@ class ImagineServiceBuilder
      * @var Cache\Resolver\ResolverInterface
      */
     private $defaultResolver;
+    /**
+     * Resuelve las url en varios paths
+     * @var Cache\Resolver\ProxyResolver
+     */
+    private $proxyResolver;
+    private $hosts;
     
     /**
      * Raiz de la carpeta publica
@@ -125,6 +131,11 @@ class ImagineServiceBuilder
         $this->defaultResolver = $defaultResolver;
         return $this;
     }
+    public function withProxyResolver(array $hosts) {
+        $this->proxyResolver = true;
+        $this->hosts = $hosts;
+        return $this;
+    }
         
     /**
      * 
@@ -154,8 +165,14 @@ class ImagineServiceBuilder
                 );
         }
         
+        $resolver= $this->defaultResolver;
+        if($this->proxyResolver === true){
+            $this->proxyResolver = new Cache\Resolver\ProxyResolver($this->defaultResolver, $this->hosts);
+            $resolver = $this->proxyResolver;
+        }
+        
         $cacheManager = $this->cacheManager;
-        $cacheManager->addResolver("default", $this->defaultResolver);
+        $cacheManager->addResolver("default",$resolver);
 
         $mimeTypeGuesser = new SimpleMimeTypeGuesser(MimeTypeGuesser::getInstance());
         $extensionGuesser = ExtensionGuesser::getInstance();
