@@ -52,6 +52,8 @@ class ImagineServiceBuilder
      */
     private $filterConfig;
     
+    private $globalDefaultImage;
+    
     /**
      *
      * @var CacheManagerInterface
@@ -137,6 +139,11 @@ class ImagineServiceBuilder
         return $this;
     }
         
+    public function withGlobalDefaultImage($globalDefaultImage) {
+        $this->globalDefaultImage = $globalDefaultImage;
+        return $this;
+    }
+    
     /**
      * 
      * @return \Tecnoready\ImagineService\Imagine\ImagineService
@@ -178,7 +185,7 @@ class ImagineServiceBuilder
         $extensionGuesser = ExtensionGuesser::getInstance();
         
         $loader = new \Tecnoready\ImagineService\Binary\Loader\FileSystemLoader(MimeTypeGuesser::getInstance(),$extensionGuesser,$this->options['web_root_dir']);
-        $dataManager = new DataManager($mimeTypeGuesser, $extensionGuesser, $filterConfig,'default');
+        $dataManager = new DataManager($mimeTypeGuesser, $extensionGuesser, $filterConfig,'default', $this->globalDefaultImage);
         $dataManager->addLoader("default", $loader);
 
         //init filters image
